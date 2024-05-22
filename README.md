@@ -16,14 +16,14 @@ This is a simple password manager application developed using Python with Flask 
    git clone <repository_url>
    cd password-manager-app
 
-## Database Setup:
+# Database Setup:
 
 **Create a SQLite database (defaulted to passwords.db) for storing user data.
 Run the Application:
 
-## bash
+# bash
 
-## python main.py
+# python main.py
 **Access the Application:**
 
 Open your web browser and go to http://localhost:5000 to access the application.
@@ -39,8 +39,8 @@ Technologies Used
 -**SQLAlchemy**
 -**Cryptography (for encryption)**
 -**HTML/CSS (for frontend templates)**
-## Contributors
-  ## Gentrit Bytyci
-  ## Getuar Kelmendi
-  ## Gentrit Ademi
-  ## Ylber Suma
+# Contributors
+  # Gentrit Bytyci
+  # Getuar Kelmendi
+  # Gentrit Ademi
+  # Ylber Suma
