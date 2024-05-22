@@ -36,3 +36,47 @@ def register():
         return redirect(url_for('login'))
 
     return render_template('register.html')
+
+
+@app.route('/dashboard')
+def dashboard():
+    if 'user_id' in session:
+        user_id = session['user_id']
+        user = User.query.get(user_id)
+        passwords = Password.query.filter_by(user_id=user_id).all()
+        return render_template('dashboard.html', user=user, passwords=passwords)
+
+    return redirect(url_for('login'))
+
+@app.route('/add_password', methods=['POST'])
+def add_password():
+    if 'user_id' in session:
+        user_id = session['user_id']
+        website = request.form['website']
+        username_email = request.form['username_email']
+        password = request.form['password']
+
+        encrypted_password = cipher_suite.encrypt(password.encode()).decode()
+
+        new_password = Password(user_id=user_id, website=website, username_email=username_email, encrypted_password=encrypted_password)
+        db.session.add(new_password)
+        db.session.commit()
+
+        flash('Password added successfully', 'success')
+
+    return redirect(url_for('dashboard'))
+
+@app.route('/decrypt_password/<int:password_id>')
+def decrypt_password(password_id):
+    if 'user_id' in session:
+        password = Password.query.get(password_id)
+        if password:
+            decrypted_password = cipher_suite.decrypt(password.encrypted_password.encode()).decode()
+            return decrypted_password
+
+    return 'Error: Password not found or unauthorized access'
+
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    return redirect(url_for('login'))
