@@ -1,14 +1,15 @@
 from main import db
-from datetime import datetime 
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password_hash = db.Column(db.String(128), nullable=False)
-    registered_on = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(120), nullable=False)
 
-class LoginSession(db.Model):
+class Password(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    login_time = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    user = db.relationship('User', backref=db.backref('sessions', lazy=True))
+    website = db.Column(db.String(255), nullable=False)
+    username_email = db.Column(db.String(255), nullable=False)
+    encrypted_password = db.Column(db.String(255), nullable=False)
+
+    user = db.relationship('User', backref=db.backref('passwords', lazy=True))
