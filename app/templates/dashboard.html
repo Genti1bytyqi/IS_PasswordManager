@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard - Password Manager</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.decrypt-button').click(function() {
+                var passwordId = $(this).data('password-id');
+                $.get('/decrypt_password/' + passwordId, function(data) {
+                    $('#password_' + passwordId).text(data);
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Welcome, {{ user.username }}</h1>
+    <h2>Your Passwords:</h2>
+    <ul>
+        {% for password in passwords %}
+            <li>
+                <strong>{{ password.website }}</strong><br>
+                Username/Email: {{ password.username_email }}<br>
+                Password: <span id="password_{{ password.id }}">{{ password.encrypted_password }}</span>
+                <button class="decrypt-button" data-password-id="{{ password.id }}">Decrypt</button>
+            </li>
+        {% endfor %}
+    </ul>
+    <h2>Add New Password:</h2>
+    <form method="POST" action="{{ url_for('add_password') }}">
+        <label for="website">Website/App:</label><br>
+        <input type="text" id="website" name="website"><br>
+        <label for="username_email">Username/Email:</label><br>
+        <input type="text" id="username_email" name="username_email"><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br><br>
+        <input type="submit" value="Add Password">
+    </form>
+    <br>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</body>
+</html>
