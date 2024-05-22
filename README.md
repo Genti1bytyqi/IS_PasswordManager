@@ -1,6 +1,6 @@
 # Password Manager Application
 
-This is a simple password manager application developed using Python with Flask and SQLAlchemy. It securely stores and manages user passwords with encryption and supports multi-factor authentication (MFA).
+This is a simple password manager application developed using Python with Flask and SQLAlchemy. It securely stores and manages user passwords with encryption.
 
 ## Features
 
