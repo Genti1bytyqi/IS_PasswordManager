@@ -13,7 +13,7 @@ This is a simple password manager application developed using Python with Flask 
 
 1. **Clone Repository:**
    ```bash
-   git clone <repository_url>
+   git clone <https://github.com/Genti1bytyqi/IS_PasswordManager>
    cd password-manager-app
 
 # Database Setup:
@@ -40,7 +40,7 @@ Technologies Used
 -**Cryptography (for encryption)**
 -**HTML/CSS (for frontend templates)**
 # Contributors
-  # Gentrit Bytyci
-  # Getuar Kelmendi
-  # Gentrit Ademi
-  # Ylber Suma
+  Gentrit Bytyci
+  Getuar Kelmendi
+  Gentrit Ademi
+  Ylber Suma
