@@ -14,21 +14,24 @@ def login():
 
         user = User.query.filter_by(username=username).first()
 
-        if user and user.password == password:  # Replace with hashed password check
-            session['user_id'] = user.id
-            return redirect(url_for('dashboard'))
+        if user:
+            decrypted_password = cipher_suite.decrypt(user.password.encode()).decode()
+            if decrypted_password == password:
+                session['user_id'] = user.id
+                return redirect(url_for('dashboard'))
 
         flash('Invalid username or password', 'error')
 
     return render_template('login.html')
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-
-        new_user = User(username=username, password=password)
+        encrypt_pass = cipher_suite.encrypt(password.encode()).decode()
+        new_user = User(username=username, password= encrypt_pass)
         db.session.add(new_user)
         db.session.commit()
 
@@ -36,8 +39,7 @@ def register():
         return redirect(url_for('login'))
 
     return render_template('register.html')
-
-
+  
 @app.route('/dashboard')
 def dashboard():
     if 'user_id' in session:
@@ -79,4 +81,6 @@ def decrypt_password(password_id):
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
+
     return redirect(url_for('login'))
+
