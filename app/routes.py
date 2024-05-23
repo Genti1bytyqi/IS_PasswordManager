@@ -39,6 +39,7 @@ def register():
         return redirect(url_for('login'))
 
     return render_template('register.html')
+  
 @app.route('/dashboard')
 def dashboard():
     if 'user_id' in session:
@@ -80,4 +81,6 @@ def decrypt_password(password_id):
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
+
     return redirect(url_for('login'))
+
